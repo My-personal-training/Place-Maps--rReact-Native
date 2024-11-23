@@ -18,7 +18,8 @@
       "@hooks/*": ["./app/hooks/*"],
       "@hooks": ["./app/hooks"],
       "@models/*": ["./app/models/*"],
-      "@assets/*": ["./app/assets/*"]
+      "@assets/*": ["./app/assets/*"],
+      "@layouts": ["./app/layouts"]
     }
   },
   "include": [
