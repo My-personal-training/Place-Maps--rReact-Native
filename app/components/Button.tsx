@@ -18,7 +18,7 @@ const Button = ({ children, onPress = () => {} }: IButton) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.BUTTON,
+    backgroundColor: Colors.PRIMARY,
     padding: 16,
     display: "flex",
     borderRadius: 99,

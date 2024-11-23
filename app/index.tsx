@@ -1,14 +1,20 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
+import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
+import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { Login } from "@screens";
+import { Text } from "@components";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const Index = () => {
+  // Extract the publishable key from the environment variables
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
   const [loaded, error] = useFonts({
     BandarBold: require("@assets/fonts/BandarBold.otf"),
     SourGummyMedium: require("@assets/fonts/SourGummy-Medium.ttf"),
@@ -25,11 +31,44 @@ const Index = () => {
     }
   }, [loaded, error]);
 
+  // Oauth configuration
+  const tokenCache = {
+    async getToken(key: string) {
+      try {
+        const item = await SecureStore.getItemAsync(key);
+        if (item) {
+          console.log(`${key} was used 🔐 \n`);
+        } else {
+          console.log("No values stored under key: " + key);
+        }
+        return item;
+      } catch (error) {
+        console.error("SecureStore get item error: ", error);
+        await SecureStore.deleteItemAsync(key);
+        return null;
+      }
+    },
+    async saveToken(key: string, value: string) {
+      try {
+        return SecureStore.setItemAsync(key, value);
+      } catch (err) {
+        return;
+      }
+    },
+  };
+
   return (
-    <View style={styles.view} onLayout={onLayoutRootView}>
-      <Login />
-      <StatusBar style="dark" />
-    </View>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <View style={styles.view} onLayout={onLayoutRootView}>
+        <SignedIn>
+          <Text>Has iniciado sesión correctamente</Text>
+        </SignedIn>
+        <SignedOut>
+          <Login />
+        </SignedOut>
+        <StatusBar style="dark" />
+      </View>
+    </ClerkProvider>
   );
 };
 

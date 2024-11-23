@@ -1,10 +1,32 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import Colors from "@constants/Colors";
+import { StyleSheet, View, Image } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import { useOAuth } from "@clerk/clerk-expo";
 import { Text } from "@components";
 import { Button } from "@components";
+import useWarmUpBrowser from "@/app/hooks/useWarmUpBrowser";
+
+WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
+  useWarmUpBrowser();
+
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+
+  // Handlers
+  const onPressHandler = async () => {
+    try {
+      const { createdSessionId, signIn, signUp, setActive } =
+        await startOAuthFlow();
+
+      if (createdSessionId && setActive) {
+        setActive({ session: createdSessionId });
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
+
   return (
     <View style={styles.view}>
       <Image
@@ -17,12 +39,12 @@ const Login = () => {
       />
       <View style={styles.textContainer}>
         <Text variant="subtitle" style={styles.text}>
-          🔥 Encontrar restaurantes cerca de aquí🔥
+          🔥 Encontrar restaurantes cerca de aquí 🔥
         </Text>
         <Text style={styles.text}>
           Aplicación para encontrar los mejores restaurantes de la ciudad 🍽
         </Text>
-        <Button>Login With Google</Button>
+        <Button onPress={onPressHandler}>Login With Google</Button>
       </View>
     </View>
   );
