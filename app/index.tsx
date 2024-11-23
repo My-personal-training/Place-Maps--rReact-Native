@@ -4,9 +4,13 @@ import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
+import {
+  NavigationContainer,
+  NavigationIndependentTree,
+} from "@react-navigation/native";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { Login } from "@screens";
-import { Text } from "@components";
+import TabNavigation from "./navigations/TabNavigation";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -61,7 +65,11 @@ const Index = () => {
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <View style={styles.view} onLayout={onLayoutRootView}>
         <SignedIn>
-          <Text>Has iniciado sesión correctamente</Text>
+          <NavigationIndependentTree>
+            <NavigationContainer>
+              <TabNavigation />
+            </NavigationContainer>
+          </NavigationIndependentTree>
         </SignedIn>
         <SignedOut>
           <Login />

@@ -1,6 +1,4 @@
+export { default as FavoriteScreen } from './FavoriteScreen';
+export { default as HomeScreen } from './HomeScreen';
 export { default as Login } from './Login';
-
-// To avoid the export default warning, we can use the following code:
-// This code does't do anything, but it will prevent the warning.
-const BaseDefault = {};
-export default BaseDefault;
+export { default as ProfileScreen } from './ProfileScreen';
