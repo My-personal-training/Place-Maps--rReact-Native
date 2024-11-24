@@ -6,7 +6,6 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"],
       "@components/*": ["./app/components/*"],
       "@components": ["./app/components"],
       "@screens/*": ["./app/screens/*"],
@@ -19,7 +18,9 @@
       "@hooks": ["./app/hooks"],
       "@models/*": ["./app/models/*"],
       "@assets/*": ["./app/assets/*"],
-      "@layouts": ["./app/layouts"]
+      "@layouts": ["./app/layouts"],
+      "@context/*": ["./app/context/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [

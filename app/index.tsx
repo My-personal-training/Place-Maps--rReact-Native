@@ -11,6 +11,7 @@ import { preventAutoHideAsync } from "expo-splash-screen";
 import { Login } from "@screens";
 import TabNavigation from "./navigations/TabNavigation";
 import { useFonts } from "@hooks";
+import UserLocationProvider from "./context/UserLocationContext";
 
 preventAutoHideAsync();
 
@@ -55,7 +56,9 @@ const Index = () => {
         <SignedIn>
           <NavigationIndependentTree>
             <NavigationContainer>
-              <TabNavigation />
+              <UserLocationProvider>
+                <TabNavigation />
+              </UserLocationProvider>
             </NavigationContainer>
           </NavigationIndependentTree>
         </SignedIn>
