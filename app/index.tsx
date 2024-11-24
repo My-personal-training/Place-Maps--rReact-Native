@@ -1,7 +1,5 @@
-import React, { useCallback } from "react";
-import { useFonts } from "expo-font";
+import React, { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
 import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -9,32 +7,14 @@ import {
   NavigationIndependentTree,
 } from "@react-navigation/native";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { preventAutoHideAsync } from "expo-splash-screen";
 import { Login } from "@screens";
 import TabNavigation from "./navigations/TabNavigation";
+import { useFonts } from "@hooks";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+preventAutoHideAsync();
 
 const Index = () => {
-  // Extract the publishable key from the environment variables
-  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
-
-  const [loaded, error] = useFonts({
-    BandarBold: require("@assets/fonts/BandarBold.otf"),
-    SourGummyMedium: require("@assets/fonts/SourGummy-Medium.ttf"),
-    SourGummySemiBold: require("@assets/fonts/SourGummy-SemiBold.ttf"),
-  });
-
-  // Load any resources or data that we need prior to rendering the app
-  const onLayoutRootView = useCallback(async () => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-    if (error && !loaded) {
-      return null;
-    }
-  }, [loaded, error]);
-
   // Oauth configuration
   const tokenCache = {
     async getToken(key: string) {
@@ -60,10 +40,18 @@ const Index = () => {
       }
     },
   };
+  const { loaded, error } = useFonts();
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
-    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-      <View style={styles.view} onLayout={onLayoutRootView}>
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
+    >
+      <View style={styles.view}>
         <SignedIn>
           <NavigationIndependentTree>
             <NavigationContainer>

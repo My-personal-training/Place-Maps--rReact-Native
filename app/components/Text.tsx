@@ -20,7 +20,7 @@ const Text = ({ children, variant = "default", style = {} }: IText) => {
 const stylesProcessor = (variant: string) =>
   StyleSheet.create({
     text: {
-      fontFamily: "SourGummyMedium",
+      fontFamily: "Urbanist500",
       fontSize: variant === "title" ? 24 : variant === "subtitle" ? 22 : 17,
       color:
         variant === "title"

@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Customizable } from "@models/base";
 import Colors from "@constants/Colors";
+import { Text } from "@components";
 
 interface IButton extends Customizable {
   children: string;
