@@ -7,7 +7,7 @@ import { useLocationStore } from "@store";
 import { API_KEY } from "@constants";
 
 const SearchBar = () => {
-  const { updateSearchedLocation } = useLocationStore();
+  const { setLocation } = useLocationStore();
   return (
     <View style={styles.searchContainer}>
       <AntDesign
@@ -27,9 +27,13 @@ const SearchBar = () => {
         placeholder="Búsqueda de lugares"
         enablePoweredByContainer={false}
         fetchDetails={true}
-        onPress={(data, details = null) => {
+        onPress={(_, details = null) => {
+          if (!details?.geometry) return;
           // @ts-ignore
-          updateSearchedLocation(details?.geometry?.location);
+          setLocation({
+            latitude: details?.geometry?.location.lat,
+            longitude: details?.geometry?.location.lng,
+          });
         }}
         query={{
           key: API_KEY,

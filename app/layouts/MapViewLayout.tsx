@@ -1,13 +1,14 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { LocationObjectCoords } from "expo-location";
 import React from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView from "react-native-maps";
 import mapConfig from "@constants/GoogleMapsConfiguration.json";
 import { useLocationStore } from "@store";
 import { MapMarker } from "@components";
 import { isEmpty } from "lodash";
 
 const MapViewLayout = () => {
-  const { location, placeList } = useLocationStore();
+  const { location, placeList, setLocation } = useLocationStore();
 
   if (!location) return <></>;
 
@@ -21,6 +22,13 @@ const MapViewLayout = () => {
           longitude: location?.longitude,
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
+        }}
+        onLongPress={(e) => {
+          if (!e?.nativeEvent?.coordinate) return;
+          setLocation({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude,
+          } as LocationObjectCoords);
         }}
       >
         <MapMarker coordinates={location} />
