@@ -31,7 +31,7 @@ const stylesProcessor = (variant: string, fontWeight: string) =>
       fontSize: variant === "title" ? 24 : variant === "subtitle" ? 20 : 17,
       color:
         variant === "title"
-          ? "#000"
+          ? colors.PRIMARY
           : variant == "subtitle"
           ? colors.PRIMARY
           : colors.TEXT,

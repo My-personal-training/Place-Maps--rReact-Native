@@ -24,11 +24,23 @@ interface PlaceItemProps {
   place: any;
   isFav: boolean;
   markedFav: () => void;
+  type?: "default" | "large";
 }
 
-const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
+const PlaceItem = ({
+  place,
+  isFav,
+  markedFav,
+  type = "default",
+}: PlaceItemProps) => {
   const { user } = useUser();
   const firstPhoto = place.photos[0];
+
+  // Conditional styling
+  const marginProcessor = {
+    width: Dimensions.get("screen").width * (type === "default" ? 0.8 : 1),
+    marginHorizontal: type === "default" ? 10 : 0,
+  };
 
   const handleMarkAsFav = async () => {
     await handleSetFavorite(place, user);
@@ -51,7 +63,7 @@ const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
   };
 
   return (
-    <View style={styles.imageContainer}>
+    <View style={{ ...styles.imageContainer, ...marginProcessor }}>
       <LinearGradient
         colors={["transparent", Colors.BACKGROUND, Colors.BACKGROUND]}
         // style={styles.background}
@@ -102,10 +114,9 @@ const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    width: Dimensions.get("screen").width * 0.8,
     backgroundColor: Colors.BACKGROUND,
     borderRadius: 10,
-    margin: 10,
+    marginVertical: 10,
     borderWidth: 0.8,
     borderColor: Colors.TEXT,
     zIndex: 1,
@@ -124,7 +135,7 @@ const styles = StyleSheet.create({
   },
   linkButton: {
     position: "absolute",
-    bottom: -15,
+    top: "65%",
     right: 10,
     display: "flex",
     justifyContent: "center",
