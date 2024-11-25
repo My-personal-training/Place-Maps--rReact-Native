@@ -1,6 +1,6 @@
 import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 import React, { useEffect } from "react";
-import { isEmpty } from "lodash";
+import { isEmpty, set } from "lodash";
 import { useLocationStore, useMarkerAndPlace } from "@store";
 import { PlaceItem } from "@components";
 import { useUser } from "@clerk/clerk-expo";
@@ -41,8 +41,9 @@ const PlaceListView = () => {
   };
 
   const getFavoritePlaces = async () => {
+    await setFavoritePlaces([]);
     const fav = await getFav(user);
-    setFavoritePlaces(fav);
+    await setFavoritePlaces(fav);
   };
 
   // Retrieve the favorite places from the database
