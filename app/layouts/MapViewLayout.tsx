@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { LocationObjectCoords } from "expo-location";
-import React from "react";
+import React, { useEffect } from "react";
 import MapView from "react-native-maps";
 import mapConfig from "@constants/GoogleMapsConfiguration.json";
 import { useLocationStore } from "@store";
@@ -9,19 +9,36 @@ import { isEmpty } from "lodash";
 
 const MapViewLayout = () => {
   const { location, placeList, setLocation } = useLocationStore();
+  const mapRef = React.useRef(null);
 
   if (!location) return <></>;
+
+  // Whenever the location changes, the map will be updated
+  useEffect(() => {
+    if (!location || mapRef?.current) return;
+
+    const region = {
+      latitude: location?.latitude,
+      longitude: location?.longitude,
+      latitudeDelta: 0.9,
+      longitudeDelta: 0.9,
+    };
+
+    // @ts-ignore
+    mapRef?.current?.animateToRegion(region, 1000);
+  }, [location]);
 
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         customMapStyle={mapConfig}
         style={styles.map}
         initialRegion={{
           latitude: location?.latitude,
           longitude: location?.longitude,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04,
+          latitudeDelta: 0.03,
+          longitudeDelta: 0.03,
         }}
         onLongPress={(e) => {
           if (!e?.nativeEvent?.coordinate) return;

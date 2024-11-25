@@ -1,6 +1,14 @@
 import React from "react";
-import { Dimensions, Image, Pressable, StyleSheet, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import {
+  Dimensions,
+  Image,
+  Linking,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from "react-native";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text } from "@components";
 import Colors from "@constants/Colors";
@@ -30,6 +38,16 @@ const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
   const handleRemoveFav = async () => {
     await deleteFavorite(place.id);
     await markedFav();
+  };
+
+  // Redirection to google maps or apple maps
+  const handleDirectionClick = () => {
+    const url = Platform.select({
+      ios: `maps:${place?.location?.latitude},${place?.location?.longitude}?q=${place?.formattedAddress}`,
+      android: `geo:${place?.location?.latitude},${place?.location?.longitude}?q=${place?.formattedAddress}`,
+    });
+    if (!url) return;
+    Linking.openURL(url);
   };
 
   return (
@@ -69,6 +87,14 @@ const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
             style={{ marginTop: 10, color: Colors.GREY_TEXT }}
           >{`Rating: ${place.rating}/5 estrellas`}</Text>
         </View>
+        <Pressable style={styles.linkButton} onPress={handleDirectionClick}>
+          <FontAwesome
+            style={styles.linkIcon}
+            name="location-arrow"
+            size={24}
+            color="black"
+          />
+        </Pressable>
       </LinearGradient>
     </View>
   );
@@ -95,6 +121,22 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     left: "85%",
+  },
+  linkButton: {
+    position: "absolute",
+    bottom: -15,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 10,
+    width: 40,
+    height: 40,
+  },
+  linkIcon: {
+    borderWidth: 1,
+    borderColor: "transparent",
   },
 });
 

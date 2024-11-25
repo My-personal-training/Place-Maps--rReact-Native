@@ -6,7 +6,7 @@ import { useLocationStore } from "@store";
 import { nearByPlaceFetch } from "@utils";
 
 const HomeScreen = () => {
-  const { location, placeList, setPlaceList } = useLocationStore();
+  const { location, setPlaceList } = useLocationStore();
 
   useEffect(() => {
     !!location && getNearByPlace();
@@ -30,6 +30,7 @@ const HomeScreen = () => {
     });
   };
 
+  if (!location) return <></>;
   return (
     <View>
       <Header />
