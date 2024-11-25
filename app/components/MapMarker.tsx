@@ -1,6 +1,7 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 import { Marker } from "react-native-maps";
+import { useMarkerAndPlace } from "@store";
 
 interface ILocation {
   coordinates: {
@@ -8,6 +9,7 @@ interface ILocation {
     longitude: number;
   };
   type?: "default" | "restaurant";
+  index?: number;
 }
 
 const markerIcon = {
@@ -15,13 +17,25 @@ const markerIcon = {
   restaurant: require("@assets/images/restaurant_marker.png"),
 };
 
-const MapMarker = ({ coordinates, type = "default" }: ILocation) => {
+const MapMarker = ({ coordinates, type = "default", index }: ILocation) => {
+  const { setMarkerSelected } = useMarkerAndPlace();
+
+  // ---------------------------------- Handlers
+
+  // Just in case the markers has an index, we set the selected marker
+  const handleOnPress = () => {
+    if (index !== undefined) {
+      setMarkerSelected(index);
+    }
+  };
+
   return (
     <Marker
       coordinate={{
         latitude: coordinates?.latitude || 0,
         longitude: coordinates?.longitude || 0,
       }}
+      onPress={handleOnPress}
     >
       <Image
         style={{

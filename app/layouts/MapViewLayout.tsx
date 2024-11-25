@@ -8,7 +8,6 @@ import { isEmpty } from "lodash";
 
 const MapViewLayout = () => {
   const { location, placeList } = useLocationStore();
-  console.log(JSON.stringify(placeList))
 
   if (!location) return <></>;
 
@@ -30,6 +29,7 @@ const MapViewLayout = () => {
           placeList.map((place, index) => (
             <MapMarker
               key={index}
+              index={index}
               coordinates={place.location}
               type="restaurant"
             />
