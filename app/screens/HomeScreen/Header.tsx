@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 50,
+    borderWidth: 1,
+    borderColor: Colors.PRIMARY,
   },
   logo: {
     width: 170,

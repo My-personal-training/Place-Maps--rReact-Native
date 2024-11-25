@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
-import { Text } from "@components";
-import { Button } from "@components";
+import { Text, Button } from "@components";
 import useWarmUpBrowser from "@/app/hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();

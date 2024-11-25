@@ -1,13 +1,12 @@
 import { View } from "react-native";
 import React, { useEffect } from "react";
-import { MapViewLayout } from "@layouts";
+import { MapViewLayout, PlaceListView } from "@layouts";
 import Header from "./Header";
 import { useLocationStore } from "@store";
 import { nearByPlaceFetch } from "@utils";
 
 const HomeScreen = () => {
-  const { location } = useLocationStore();
-  const [placeList, setPlaceList] = React.useState([]);
+  const { location, placeList, setPlaceList } = useLocationStore();
 
   useEffect(() => {
     !!location && getNearByPlace();
@@ -35,6 +34,7 @@ const HomeScreen = () => {
     <View>
       <Header />
       <MapViewLayout />
+      <PlaceListView />
     </View>
   );
 };

@@ -23,7 +23,6 @@ export const nearByPlaceFetch = async (body: any) => {
       body,
       requestConfig
     );
-    console.log("Near by place response", data);
     return data;
   } catch (error) {
     console.error("Error fetching near by place", error);

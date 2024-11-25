@@ -6,6 +6,7 @@ const useFonts = () => {
   // Fonts
   const [loaded, error] = useFontsLibrary({
     Urbanist500: require("@assets/fonts/Urbanist_500Medium.ttf"),
+    "SourGummy-SemiBold": require("@assets/fonts/SourGummy-SemiBold.ttf"),
   });
 
   // Side effect to hide splash screen

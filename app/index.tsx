@@ -12,7 +12,6 @@ import { Login } from "@screens";
 import TabNavigation from "./navigations/TabNavigation";
 import { useFonts } from "@hooks";
 import { UserLocationHOC } from "@hoc";
-import Text from "@components/Text";
 
 preventAutoHideAsync();
 
