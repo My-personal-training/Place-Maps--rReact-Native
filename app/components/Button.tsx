@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   buttonText: {
-    fontFamily: "SourGummySemiBold",
+    fontFamily: "Urbanist500",
     color: Colors.SECONDARY,
     textAlign: "center",
   },

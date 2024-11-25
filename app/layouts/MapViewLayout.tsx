@@ -1,11 +1,11 @@
 import { View, StyleSheet, Image } from "react-native";
-import React, { useContext } from "react";
+import React from "react";
 import MapView, { Marker } from "react-native-maps";
 import mapConfig from "@constants/GoogleMapsConfiguration.json";
-import { UserLocationContext } from "@context/UserLocationContext";
+import { useLocationStore } from "@store";
 
 const MapViewLayout = () => {
-  const { location } = useContext(UserLocationContext);
+  const { location } = useLocationStore();
 
   if (!location) return <></>;
 

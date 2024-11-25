@@ -1,21 +1,14 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
+import { useLocationStore } from "@store";
 
-interface ILocationContext {
-  location?: Location.LocationObjectCoords | null;
-}
-
-interface UserLocationProviderProps extends ILocationContext {
+interface UserLocationProviderProps {
   children: React.ReactNode;
 }
 
-export const UserLocationContext = createContext<ILocationContext>({});
-
-const UserLocationProvider = ({ children }: UserLocationProviderProps) => {
+const UserLocationHOC = ({ children }: UserLocationProviderProps) => {
   // Expo location state
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
+  const { location, setLocation } = useLocationStore();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Side effects for getting the current location
@@ -28,7 +21,7 @@ const UserLocationProvider = ({ children }: UserLocationProviderProps) => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      setLocation(location.coords);
     }
 
     getCurrentLocation();
@@ -41,11 +34,7 @@ const UserLocationProvider = ({ children }: UserLocationProviderProps) => {
     text = JSON.stringify(location);
   }
 
-  return (
-    <UserLocationContext.Provider value={{ location: location?.coords }}>
-      {children}
-    </UserLocationContext.Provider>
-  );
+  return <>{children}</>;
 };
 
-export default UserLocationProvider;
+export default UserLocationHOC;

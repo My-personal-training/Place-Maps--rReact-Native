@@ -3,6 +3,7 @@ import React from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Colors from "@constants/Colors";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const { user } = useUser();
@@ -17,6 +18,7 @@ const Header = () => {
         />
         <FontAwesome5 name="filter" size={24} color={Colors.PRIMARY} />
       </View>
+      <SearchBar />
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
@@ -11,7 +11,8 @@ import { preventAutoHideAsync } from "expo-splash-screen";
 import { Login } from "@screens";
 import TabNavigation from "./navigations/TabNavigation";
 import { useFonts } from "@hooks";
-import UserLocationProvider from "./context/UserLocationContext";
+import { UserLocationHOC } from "@hoc";
+import Text from "@components/Text";
 
 preventAutoHideAsync();
 
@@ -56,9 +57,9 @@ const Index = () => {
         <SignedIn>
           <NavigationIndependentTree>
             <NavigationContainer>
-              <UserLocationProvider>
+              <UserLocationHOC>
                 <TabNavigation />
-              </UserLocationProvider>
+              </UserLocationHOC>
             </NavigationContainer>
           </NavigationIndependentTree>
         </SignedIn>

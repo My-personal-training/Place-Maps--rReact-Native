@@ -17,6 +17,8 @@ module.exports = function (api) {
             "@assets": "./app/assets",
             "@layouts": "./app/layouts",
             "@context": "./app/context",
+            "@store": "./app/store",
+            "@hoc": "./app/hoc",
             "@": "./",
           },
         },

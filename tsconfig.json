@@ -1,6 +1,7 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
@@ -19,7 +20,9 @@
       "@models/*": ["./app/models/*"],
       "@assets/*": ["./app/assets/*"],
       "@layouts": ["./app/layouts"],
-      "@context/*": ["./app/context/*"],
+      "@context/*": ["app/hoc/*"],
+      "@store": ["./app/store"],
+      "@hoc": ["./app/hoc"],
       "@/*": ["./*"]
     }
   },
