@@ -1,5 +1,6 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { Dimensions, Image, Pressable, StyleSheet, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text } from "@components";
 import Colors from "@constants/Colors";
@@ -8,13 +9,28 @@ import {
   REPLACE_URL_NAME_KEY,
   REPLACE_URL_PARAMETERS_KEY,
 } from "@constants";
+import { deleteFavorite, handleSetFavorite } from "@utils";
+import { useUser } from "@clerk/clerk-expo";
 
 interface PlaceItemProps {
   place: any;
+  isFav: boolean;
+  markedFav: () => void;
 }
 
-const PlaceItem = ({ place }: PlaceItemProps) => {
+const PlaceItem = ({ place, isFav, markedFav }: PlaceItemProps) => {
+  const { user } = useUser();
   const firstPhoto = place.photos[0];
+
+  const handleMarkAsFav = async () => {
+    await handleSetFavorite(place, user);
+    await markedFav();
+  };
+
+  const handleRemoveFav = async () => {
+    await deleteFavorite(place.id);
+    await markedFav();
+  };
 
   return (
     <View style={styles.imageContainer}>
@@ -22,6 +38,21 @@ const PlaceItem = ({ place }: PlaceItemProps) => {
         colors={["transparent", Colors.BACKGROUND, Colors.BACKGROUND]}
         // style={styles.background}
       >
+        {!isFav ? (
+          <Pressable
+            style={styles.pressableContainer}
+            onPress={handleMarkAsFav}
+          >
+            <AntDesign name={"hearto"} size={34} color={Colors.TEXT} />
+          </Pressable>
+        ) : (
+          <Pressable
+            style={styles.pressableContainer}
+            onPress={handleRemoveFav}
+          >
+            <AntDesign name={"heart"} size={34} color={"red"} />
+          </Pressable>
+        )}
         <Image
           style={styles.image}
           src={GOOGLE_PHOTO_URL.replace(
@@ -34,9 +65,6 @@ const PlaceItem = ({ place }: PlaceItemProps) => {
         />
         <View style={{ padding: 15, paddingTop: 0 }}>
           <Text variant="subtitle">{place.displayName.text}</Text>
-          {/* <Text style={{ marginTop: 10, color: Colors.GREY_TEXT }}>
-          {place.shortFormattedAddress}
-        </Text> */}
           <Text
             style={{ marginTop: 10, color: Colors.GREY_TEXT }}
           >{`Rating: ${place.rating}/5 estrellas`}</Text>
@@ -62,6 +90,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     objectFit: "cover",
     zIndex: -1,
+  },
+  pressableContainer: {
+    position: "absolute",
+    top: 10,
+    left: "85%",
   },
 });
 

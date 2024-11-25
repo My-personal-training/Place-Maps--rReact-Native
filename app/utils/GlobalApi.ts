@@ -11,7 +11,8 @@ const requestConfig = {
       "places.shortFormattedAddress",
       "places.location",
       "places.photos",
-      "places.rating"
+      "places.rating",
+      "places.id",
     ],
   },
 };
