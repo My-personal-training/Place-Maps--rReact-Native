@@ -3,9 +3,12 @@ import React from "react";
 import MapView, { Marker } from "react-native-maps";
 import mapConfig from "@constants/GoogleMapsConfiguration.json";
 import { useLocationStore } from "@store";
+import { MapMarker } from "@components";
+import { isEmpty } from "lodash";
 
 const MapViewLayout = () => {
-  const { location } = useLocationStore();
+  const { location, placeList } = useLocationStore();
+  console.log(JSON.stringify(placeList))
 
   if (!location) return <></>;
 
@@ -21,22 +24,16 @@ const MapViewLayout = () => {
           longitudeDelta: 0.04,
         }}
       >
-        <Marker
-          coordinate={{
-            latitude: location?.latitude || 0,
-            longitude: location?.longitude || 0,
-          }}
-        >
-          <Image
-            style={{
-              top: 21,
-              left: 12,
-              width: 30,
-              height: 30,
-            }}
-            source={require("@assets/images/marker_icon.png")}
-          />
-        </Marker>
+        <MapMarker coordinates={location} />
+
+        {!isEmpty(placeList) &&
+          placeList.map((place, index) => (
+            <MapMarker
+              key={index}
+              coordinates={place.location}
+              type="restaurant"
+            />
+          ))}
       </MapView>
     </View>
   );
@@ -52,10 +49,6 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: "100%",
-  },
-  marker: {
-    width: 35,
-    height: 35,
   },
 });
 

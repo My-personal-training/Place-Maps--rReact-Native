@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 import React from "react";
 import { isEmpty } from "lodash";
 import { useLocationStore } from "@store";
@@ -13,6 +13,9 @@ const PlaceListView = () => {
         <FlatList
           data={placeList}
           horizontal
+          pagingEnabled
+          disableIntervalMomentum
+          snapToInterval={(Dimensions.get("screen").width * 0.8) + 20}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => {
             return <PlaceItem key={index} place={item} />;
