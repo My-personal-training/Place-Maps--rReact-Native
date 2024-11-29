@@ -15,13 +15,13 @@ const MapViewLayout = () => {
 
   // Whenever the location changes, the map will be updated
   useEffect(() => {
-    if (!location || mapRef?.current) return;
+    if (!location || !mapRef?.current) return;
 
     const region = {
       latitude: location?.latitude,
       longitude: location?.longitude,
-      latitudeDelta: 0.9,
-      longitudeDelta: 0.9,
+      latitudeDelta: 0.05,
+      longitudeDelta: 0.05,
     };
 
     // @ts-ignore
@@ -37,8 +37,8 @@ const MapViewLayout = () => {
         initialRegion={{
           latitude: location?.latitude,
           longitude: location?.longitude,
-          latitudeDelta: 0.03,
-          longitudeDelta: 0.03,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         }}
         onLongPress={(e) => {
           if (!e?.nativeEvent?.coordinate) return;

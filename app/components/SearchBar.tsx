@@ -5,6 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Colors from "@constants/Colors";
 import { useLocationStore } from "@store";
 import { API_KEY } from "@constants";
+import { cloneDeep } from "lodash";
 
 const SearchBar = () => {
   const { setLocation } = useLocationStore();

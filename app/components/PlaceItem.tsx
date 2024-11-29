@@ -83,16 +83,16 @@ const PlaceItem = ({
             <AntDesign name={"heart"} size={34} color={"red"} />
           </Pressable>
         )}
-        <Image
-          style={styles.image}
-          src={GOOGLE_PHOTO_URL.replace(
-            REPLACE_URL_NAME_KEY,
-            firstPhoto.name
-          ).replace(
-            REPLACE_URL_PARAMETERS_KEY,
-            "maxWidthPx=1200&maxHeightPx=800"
-          )}
-        />
+          <Image
+            style={styles.image}
+            src={GOOGLE_PHOTO_URL.replace(
+              REPLACE_URL_NAME_KEY,
+              firstPhoto.name
+            ).replace(
+              REPLACE_URL_PARAMETERS_KEY,
+              "maxWidthPx=1200&maxHeightPx=800"
+            )}
+          />
         <View style={{ padding: 15, paddingTop: 0 }}>
           <Text variant="subtitle">{place.displayName.text}</Text>
           <Text

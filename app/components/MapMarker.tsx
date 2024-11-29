@@ -39,8 +39,8 @@ const MapMarker = ({ coordinates, type = "default", index }: ILocation) => {
     >
       <Image
         style={{
-          top: 21,
-          left: 12,
+          // top: 21,
+          // left: 12,
           width: 30,
           height: 30,
         }}

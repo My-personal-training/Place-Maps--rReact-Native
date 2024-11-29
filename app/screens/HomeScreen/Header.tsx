@@ -3,7 +3,7 @@ import React from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Colors from "@constants/Colors";
-import SearchBar from "./SearchBar";
+import { SearchBar } from "@components";
 
 const Header = () => {
   const { user } = useUser();
