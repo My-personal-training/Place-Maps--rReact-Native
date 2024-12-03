@@ -1,6 +1,7 @@
 import { LocationObjectCoords } from "expo-location";
-import { Point } from "react-native-maps";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface LocationStore {
   location: LocationObjectCoords | null;
@@ -9,7 +10,7 @@ interface LocationStore {
   setPlaceList: (placeList: any[]) => void;
 }
 
-const useLocationStore = create<LocationStore>((set) => ({
+const useLocationStore = create<LocationStore>()((set) => ({
   location: null,
   placeList: [],
   setLocation: (location: LocationObjectCoords) => {

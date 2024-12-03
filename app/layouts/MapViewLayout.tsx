@@ -11,7 +11,7 @@ const MapViewLayout = () => {
   const { location, placeList, setLocation } = useLocationStore();
   const mapRef = React.useRef(null);
 
-  if (!location) return <></>;
+  if (isEmpty(location)) return <></>;
 
   // Whenever the location changes, the map will be updated
   useEffect(() => {
@@ -48,8 +48,6 @@ const MapViewLayout = () => {
           } as LocationObjectCoords);
         }}
       >
-        <MapMarker coordinates={location} />
-
         {!isEmpty(placeList) &&
           placeList.map((place, index) => (
             <MapMarker
@@ -59,6 +57,9 @@ const MapViewLayout = () => {
               type="restaurant"
             />
           ))}
+        {!isEmpty(location) && (
+          <MapMarker coordinates={location} type="default" />
+        )}
       </MapView>
     </View>
   );

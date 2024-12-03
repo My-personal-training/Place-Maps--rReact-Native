@@ -4,13 +4,11 @@ import { MapViewLayout, PlaceListView } from "@layouts";
 import Header from "./Header";
 import { useLocationStore } from "@store";
 import { nearByPlaceFetch } from "@utils";
+import { isEmpty } from "lodash";
 
 const HomeScreen = () => {
   const { location, setPlaceList } = useLocationStore();
 
-  useEffect(() => {
-    !!location && getNearByPlace();
-  }, [location]);
   const getNearByPlace = () => {
     const requestConfig = {
       includedTypes: ["restaurant"],
@@ -29,6 +27,11 @@ const HomeScreen = () => {
       setPlaceList(result?.places);
     });
   };
+
+  useEffect(() => {
+    if (isEmpty(location)) return;
+    !!location && getNearByPlace();
+  }, [location]);
 
   if (!location) return <></>;
   return (

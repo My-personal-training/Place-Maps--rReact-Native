@@ -16,6 +16,7 @@ import { UserLocationHOC } from "@hoc";
 preventAutoHideAsync();
 
 const Index = () => {
+  const { loaded: fontLoaded, error: errorLoadingFont } = useFonts();
   // Oauth configuration
   const tokenCache = {
     async getToken(key: string) {
@@ -41,9 +42,8 @@ const Index = () => {
       }
     },
   };
-  const { loaded, error } = useFonts();
 
-  if (!loaded && !error) {
+  if (!fontLoaded && !fontLoaded) {
     return null;
   }
 

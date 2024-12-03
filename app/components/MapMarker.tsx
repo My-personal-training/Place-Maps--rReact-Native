@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { Image } from "react-native";
 import React from "react";
 import { Marker } from "react-native-maps";
 import { useMarkerAndPlace } from "@store";

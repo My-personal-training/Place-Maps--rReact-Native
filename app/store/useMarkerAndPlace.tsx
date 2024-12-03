@@ -7,7 +7,7 @@ interface IMarkerAndPlace {
   setFavoritePlaces: (favoritePlaces: any[]) => void;
 }
 
-const useMarkerAndPlace = create<IMarkerAndPlace>((set) => ({
+const useMarkerAndPlace = create<IMarkerAndPlace>()((set) => ({
   markerSelected: null,
   favoritePlaces: [],
   setMarkerSelected: (markerSelected: number) =>
